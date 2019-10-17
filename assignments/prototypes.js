@@ -20,11 +20,11 @@ function GameObject (attr) {
   this.createdAt = attr.createdAt;
   this.name = attr.name;
   this.dimensions = attr.dimensions;
+  this.destroy = function () {
+    return `${attr.name} was removed from the game.`
+  }
 }
 
-GameObject.prototype.destroy = function () {
-  return `${this.name} was removed from the game.`
-}
 
 /*
   === CharacterStats ===
@@ -36,13 +36,14 @@ GameObject.prototype.destroy = function () {
 function CharacterStats (attr) {
   GameObject.call(this, attr);
   this.healthPoints = attr.healthPoints;
-}
-
-CharacterStats.prototype.takeDamage = function() {
-  return `${this.name} took damage.`
+  this.takeDamage = function() {
+    return `${attr.name} took damage.`
+  }
 }
 
 CharacterStats.prototype = Object.create(GameObject);
+
+
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -59,13 +60,13 @@ function Humanoid (attr) {
   this.team = attr.team;
   this.weapons = attr.weapons;
   this.language = attr.language;
-}
-
-Humanoid.prototype.greet = function () {
-  return `${this.name} offers a greeting in ${this.language}.`;
+  this.greet = function () {
+    return `${attr.name} offers a greeting in ${attr.language}.`
+  };
 }
 
 Humanoid.prototype = Object.create(CharacterStats.prototype);
+
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -75,7 +76,7 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -136,7 +137,7 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
